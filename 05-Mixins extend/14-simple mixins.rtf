@@ -1,0 +1,141 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 Think about your average stylesheet. You may repeat combinations of CSS properties over and over again. Look at mixins.html and mixins.scss \'96 see how we have repeated ourselves over and over here in these styles. We could move some of these values to variables. We could clean up some of those font statements with some nesting. But in the end, we\'92re still repeating ourselves over and over.\
+\
+$primary-color: #00c4c7;\
+$secondary-color: #c80060;\
+\
+h1 \{\
+	background-color: $primary-color;\
+	color: white;\
+	font-weight: normal;\
+	font-family: Georgia, serif;\
+	font-style: italic;\
+\}\
+h2 \{\
+	background-color: $secondary-color;\
+	color: white;\
+	font-weight: normal;\
+	font-family: Georgia, serif;\
+	font-style: italic;\
+\}\
+h3 \{\
+	background-color: $primary-color;\
+	color: white;\
+	font-weight: normal;\
+	font-family: Georgia, serif;\
+	font-style: italic;\
+\}\
+h4 \{\
+	background-color: $secondary-color;\
+	color: white;\
+	font-weight: normal;\
+	font-family: Georgia, serif;\
+	font-style: italic;\
+\}\
+h5 \{\
+	background-color: $primary-color;\
+	color: white;\
+	font-weight: normal;\
+	font-family: Georgia, serif;\
+	font-style: italic;\
+\}\
+One of the things we might do is clean this up with a little CSS magic. Make one selector for the styles in common, and then have individual selectors for what changes. \
+\
+$primary-color: #00c4c7;\
+$secondary-color: #c80060;\
+\
+h1, h2, h3, h4, h5 \{\
+	color: white;\
+	font-weight: normal;\
+	font-family: Georgia, serif;\
+	font-style: italic;\
+\}\
+h1, h3, h5 \{\
+	background-color: $primary-color;\
+\}\
+h2, h4 \{\
+	background-color: $secondary-color;\
+\}\
+\
+But what if I now want to use that same white Georgia italic font elsewhere in my document? The code gets difficult to read and understand if I\'92m referring to styles all over my CSS documents. This is where mixins come in.\
+\
+A mixin is a little snip of code that you can use over and over in your stylesheet. Define the mixin near the top of your Sass, after your variables, because maybe you\'92ll include variables in your mixin, but before you start calling the mixin. \
+\
+A mixin is created by placing a @mixin at the start of the code snippet, followed by the name of the mixin. Then use @include to include the mixin.\
+\
+$primary-color: #00c4c7;\
+$secondary-color: #c80060;\
+\
+@mixin std-heading \{\
+	color: white;\
+	font-weight: normal;\
+	font-family: Georgia, serif;\
+	font-style: italic;\
+\}\
+h1, h3, h5 \{\
+	@include std-heading;\
+	background-color: $primary-color;\
+\}\
+h2, h4 \{\
+	@include std-heading;\
+	background-color: $secondary-color;\
+\}\
+\
+We can tweak this a bit further, just to show you what\'92s possible with mixins. 
+\b For example, you can include variables in your mixins.\
+\
+
+\b0 $primary-color: #00c4c7;\
+$secondary-color: #c80060;\
+$heading-font: Georgia, serif;\
+\
+@mixin std-heading \{\
+	color: white;\
+	font-weight: normal;\
+	font-family: $heading-font;\
+	font-style: italic;\
+\}\
+\
+h1, h3, h5 \{\
+	@include std-heading;\
+	background-color: $primary-color;\
+\}\
+h2, h4 \{\
+	@include std-heading;\
+	background-color: $secondary-color;\
+\}\
+\
+\pard\pardeftab720\ri720
+
+\b \cf0 You can use nesting with your mixins.\
+\pard\pardeftab720\ri720
+
+\b0 \cf0 \
+$primary-color: #00c4c7;\
+$secondary-color: #c80060;\
+$heading-font: Georgia, serif;\
+\
+@mixin std-heading \{\
+	color: white;\
+	font: \{\
+		weight: normal;\
+		family: $heading-font;\
+		style: italic;\
+	\}\
+\}\
+\
+h1, h3, h5 \{\
+	@include std-heading;\
+	background-color: $primary-color;\
+\}\
+h2, h4 \{\
+	@include std-heading;\
+	background-color: $secondary-color;\
+\}\
+}

@@ -1,0 +1,119 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 You can include more than one extend within a given selector. \
+\
+Let\'92s add another class to the Sass file:\
+\
+.smalltext \{\
+	font-size: 0.8em;\
+	font-weight: bold;\
+	color: black;\
+\}\
+\
+Now let\'92s say we want to include this small text as part of our primary box style:\
+\
+.box \{\
+  width: 100px;\
+  height: 100px;\
+  margin: 1em;\
+  padding: 1em;\
+  color: white;\
+\}\
+.smalltext \{\
+	font-size: 0.8em;\
+	font-weight: bold;\
+	color: black;\
+\}\
+.box-primary \{\
+	@extend .box;\
+	@extend .smalltext;\
+	background-color: $primary-color;\
+	border-radius: 10px;\
+\}\
+.box-secondary \{\
+	@extend .box;\
+	background-color: $secondary-color;\
+\}\
+\
+\pard\pardeftab720\ri720
+
+\b \cf0 The compiled CSS is:\
+\pard\pardeftab720\ri720
+
+\b0 \cf0 \
+\pard\tqc\tx4320\tqr\tx8640\pardeftab720\ri720
+\cf0 .box, .box-primary, .box-secondary \{\
+  width: 100px;\
+  height: 100px;\
+  margin: 1em;\
+  padding: 1em;\
+  color: white;\
+\}\
+\
+.smalltext, .box-primary \{\
+  font-size: 0.8em;\
+  font-weight: bold;\
+  color: black;\
+\}\
+\
+.box-primary \{\
+  background-color: #00c4c7;\
+  border-radius: 10px;\
+\}\
+\
+.box-secondary \{\
+  background-color: #c80060;\
+\pard\pardeftab720\ri720
+\cf0 \}\
+\
+In other words, the following happens:\
+\
+\pard\pardeftab720\li720\fi-360\ri720
+\ls1\ilvl0\cf0 1.	Because we extended box in the primary and secondary styles, we have a joint style that includes all 3 selectors.\
+2.	Because we extended smalltext in box-primary, we have a style for smalltext and box-primary.\
+3.	We also have a unique box-primary style containing all of the declarations not part of box or smalltext.\
+\pard\pardeftab720\ri720
+\cf0 If we choose to add a smalltext extension to box secondary:\
+\
+.box-secondary \{\
+	@extend .box;\
+	@extend .smalltext;\
+	background-color: $secondary-color;\
+\}\
+\
+\pard\pardeftab720\ri720
+
+\b \cf0 The output CSS looks like this:\
+\pard\pardeftab720\ri720
+
+\b0 \cf0 \
+.box, .box-primary, .box-secondary \{\
+  width: 100px;\
+  height: 100px;\
+  margin: 1em;\
+  padding: 1em;\
+  color: white;\
+\}\
+\
+.smalltext, .box-primary, .box-secondary \{\
+  font-size: 0.8em;\
+  font-weight: bold;\
+  color: black;\
+\}\
+\
+.box-primary \{\
+  background-color: #00c4c7;\
+  border-radius: 10px;\
+\}\
+\
+.box-secondary \{\
+  background-color: #c80060;\
+\}\
+}

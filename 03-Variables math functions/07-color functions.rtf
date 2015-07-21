@@ -1,0 +1,119 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;\f1\fswiss\fcharset0 ArialMT;\f2\froman\fcharset0 Times-Roman;
+}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 $primary-color: #00c4c7;\
+$secondary-color: #c80060;\
+\
+h1 \{\
+	background-color: $primary-color;\
+	color: white;\
+\}\
+h2 \{\
+	background-color: $secondary-color;\
+	color: white;\
+\}\
+h3 \{\
+	background-color: $primary-color;\
+	color: white;\
+\}\
+h4 \{\
+	background-color: $secondary-color;\
+	color: white;\
+\}\
+h5 \{\
+	background-color: $primary-color;\
+	color: white;\
+\}\
+.original-blue \{\
+	background-color: $primary-color;\
+	color: white;\
+\}\
+.original-pink \{\
+	background-color: $secondary-color;\
+	color: white;\
+\}\
+\
+\pard\pardeftab720\ri720
+
+\f1\fs20 \cf0 There are dozens of functions dealing with color in Sass, from the extremely useful to the silly and sublime. Here we explore lighten, darken, transparentize, opacify, rgba, saturate, and desaturate.
+\f2 \
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 \
+Let\'92s tweak each one of these color instances to give a bit of customization to each one of these headings. It\'92s not the greatest graphic design in the world, but it will give us a great chance to see the effect each function has on our colors. All of Sass\'92s functions, including those having to do with color, are listed in the Sass documentation: http://www.sass-lang.com/documentation/Sass/Script/Functions.html\
+\
+Lighten and darken are two of the most basic and most used color functions in Sass. They take two arguments, meaning they take two input values. One is the color value, and the other is a percentage. The calculation is made on compiling \'96 take this color, and make it some percentage lighter or darker.\
+\
+Lighten and darken are awesome because they manipulate color within the color family. All of those times you had to go to Photoshop or Gimp or another website to make a color lighter or darker, but still matching within the color family chosen? those days are gone!\
+\
+Likewise, we can saturate and desaturate colors based on the same inputs, a color and a percentage. The blue and pink here are fairly saturated, so desaturating them will mix in a bit more grey and make them not so bright. In fact, these colors are maximally saturated, so we\'92ll need to change the h4 to another color so you can see the saturate effect!\
+\
+$primary-color: #00c4c7;\
+$secondary-color: #c80060;\
+\
+h1 \{\
+	background-color: darken($primary-color, 10%);\
+	color: white;\
+\}\
+h2 \{\
+	background-color: lighten($secondary-color, 10%);\
+	color: white;\
+\}\
+h3 \{\
+	background-color: desaturate($primary-color, 30%);\
+	color: white;\
+\}\
+h4 \{\
+	background-color: saturate(#cc8850, 30%);\
+	color: white;\
+\}\
+h5 \{\
+	background-color: $primary-color;\
+	color: white;\
+\}\
+.original-blue \{\
+	background-color: $primary-color;\
+	color: white;\
+\}\
+.original-pink \{\
+	background-color: $secondary-color;\
+	color: white;\
+\}\
+.original-brown \{\
+	background-color: #cc8850;\
+	color: white;\
+\}\
+\
+Next, we might want to make some of our colors transparent. To do this normally, you have to write a rgba color, with the format of  rgba(0, 196, 199, 0.2). This is the 3 color channels, RGB, plus the alpha value. The alpha value, in this case, means show only 20% opaque, or 80% transparent.\
+\
+This could be applied to the h5 using the transparentize function:\
+h5 \{\
+	background-color: transparentize($primary-color, 0.8);\
+	color: white;\
+\}\
+\
+In this case, we\'92re saying make it 80% transparent \'96 which is 20% opaque. So the output is a different number, but it means the same thing.\
+\
+What\'92s nice about this function is that we don\'92t have to figure out the RGB values in non-hexadecimal format to write our color.\
+\
+Opacify does the same type of thing, in that it makes a color more opaque. However, our colors are already 100% opaque, so this function currently does nothing for us. However, if I add some transparency to our variable, then we can test opacify.\
+\
+$primary-color: transparentize(#00c4c7, 0.5);\
+h5 \{\
+	background-color: opacify($primary-color, 0.8);\
+	color: white;\
+\}\
+\
+Finally, you can stack these functions on top of each other. What if we wanted the saturation in our h4, but we\'92d also like to add some transparency? \
+\
+h4 \{\
+	background-color: transparentize(saturate(#cc8850, 30%), 0.8);\
+	color: white;\
+\}\
+You can always assign new variables as you wish, for example $transparent-primary-color: transparentize($primary-color, 0.8); Remember to think about how your code will be read later if you stack things on top of each other like this! Also remember that adding these extra steps adds nothing to the overall weight of the outputted CSS. You can add variables, but only the final values are calculated in the CSS.\
+}

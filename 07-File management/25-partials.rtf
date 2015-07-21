@@ -1,0 +1,32 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\tqc\tx4320\tqr\tx8640\pardeftab720\ri720
+
+\f0\fs24 \cf0 At this point, we have a ton of stuff crammed into our SCSS file. It\'92s fine to program our Sass this way if that\'92s what works. However, many people find it easier and simpler to divide up Sass over several smaller files. These smaller files are called partials, because they partially contain the Sass required for the website. You\'92ll have a single main Sass file that calls all of the partial files, and that\'92s the file that will ultimately be compiled.\
+\
+Let\'92s set this up so you can see how it works.\
+\
+For example, it\'92s very common to have a separate file for variables and another for mixins, so let\'92s set these up. Create a new file and call it _variables.scss. It\'92s important to start the file name with an underscore, because this tells Sass that this is a partial file. Without the underscore, Sass will try to compile the partial file to its own separate CSS file, and that\'92s not what we want.\
+\
+_mixins.scss\
+\
+At this point, we can divide up the rest of the styles however we\'92d like. Some people like to group typography styles, or layout styles, form styles, or in some other way, because those groupings make sense to their work. We don\'92t have a ton of styles here, so I\'92m simply going to group these by media query to show you how this works.\
+\
+I\'92ll set up three more partials, one called _mobile.scss, _tablet.scss, and _desktop.scss.\
+\
+Now we have no styles left in filemgt.scss! This is the file that ultimately compiles, though, and we need a file that will bring together all of those individual partial files so they compile correctly. The order matters, of course, just as it always does in CSS. Whatever order the partials are listed in is the order they will compile.\
+\
+So, to import our files, we\'92ll set up the code this way:\
+\
+@import "variables";\
+@import "mixins";\
+@import "mobile";\
+@import "tablet";\
+@import "desktop";\
+\
+You don\'92t need the underscore to start the file name or the .scss on the end. This is all understood by Sass, so you just need the partial file names like this. Make sure they\'92re in the right order. Variables come first, because they may be called by mixins. Mixins are second, because they may be called by any of the media query stylesheets. Then we have listed our media query stylesheets in the order in which we want to include them.\
+\
+}

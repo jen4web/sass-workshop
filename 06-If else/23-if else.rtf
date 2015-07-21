@@ -1,0 +1,96 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\tqc\tx4320\tqr\tx8640\pardeftab720\ri720
+
+\f0\fs24 \cf0 So we got our floatme mixin working fairly well, but we\'92d like to do more with this. Rather than testing every time to see if something is true, could we do something different? If this is true, do it, otherwise, do something else? And could we have a default value?\
+\
+Let\'92s address the default value first.\
+\
+@mixin floatme ($float: right) \{\
+  float: $float;\
+  @if $float == right \{\
+    margin: 0 0 $standard-space $standard-space;\
+  \}\
+  @if $float == left \{\
+    margin: 0 $standard-space $standard-space 0;\
+  \}\
+\}\
+\
+we\'92ve specified a value for $float as we pass it in. If there is no argument passed to the mixin, it\'92s assumed that right is the default value. Let\'92s see that in action now, by changing the implementation further down the page.\
+\
+  .floatright \{\
+    @include floatme;\
+  \}\
+\
+  .floatright \{\
+    float: right;\
+    margin: 0 0 1em 1em;\
+  \}\
+\
+It\'92s generally a good practice to set a default value on your mixin, just in case you forget to set one at some point.\
+\
+Now, let\'92s rewrite the mixin using @if and @else:\
+\
+@mixin floatme ($float: right) \{\
+  float: $float;\
+  @if $float == right \{\
+    margin: 0 0 $standard-space $standard-space;\
+  \}\
+  @else \{\
+    margin: 0 $standard-space $standard-space 0;\
+  \}\
+\}\
+\
+So in this case we\'92re saying to first write in the value of $float. Then if that if the value of float is right, then we assign one type of margin. Otherwise, we assign a different margin. We know that the float property can accept values of left, right, or none. What if a value of none is passed in? In this case, it will get the second margin value, the same as a value of left.\
+\
+What if we do want a new class of \'93floatnone\'94, and we\'92d like to specify a different margin value for that? We can work with else if here as well.\
+\
+@mixin floatme ($float: right) \{\
+  float: $float;\
+  @if $float == right \{\
+    margin: 0 0 $standard-space $standard-space;\
+  \}\
+  @else if $float == left \{\
+    margin: 0 $standard-space $standard-space 0;\
+  \}\
+  @else \{\
+    margin: 0 auto;\
+    display: block;\
+  \}\
+\}\
+\
+\pard\tqc\tx4320\tqr\tx8640\pardeftab720\ri720
+
+\b \cf0 Implementation: \
+\pard\tqc\tx4320\tqr\tx8640\pardeftab720\ri720
+
+\b0 \cf0 \
+  .floatnone \{\
+    @include floatme(none);\
+  \}\
+\
+\pard\tqc\tx4320\tqr\tx8640\pardeftab720\ri720
+
+\b \cf0 Output CSS:\
+\pard\tqc\tx4320\tqr\tx8640\pardeftab720\ri720
+
+\b0 \cf0 \
+  .floatleft \{\
+    float: left;\
+    margin: 0 1em 1em 0;\
+  \}\
+\
+  .floatright \{\
+    float: right;\
+    margin: 0 0 1em 1em;\
+  \}\
+\
+  .floatnone \{\
+    float: none;\
+    margin: 0 auto;\
+    display: block;\
+  \}\
+}

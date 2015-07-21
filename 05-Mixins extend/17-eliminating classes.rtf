@@ -1,0 +1,68 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 This is a fairly common approach to CSS. The Bootstrap framework frequently uses an approach like this.\
+\
+.box \{\
+  width: 100px;\
+  height: 100px;\
+  margin: 1em;\
+  padding: 1em;\
+  color: white;\
+\}\
+.box-primary \{\
+	background-color: $primary-color;\
+	border-radius: 10px;\
+\}\
+.box-secondary \{\
+	background-color: $secondary-color;\
+\}\
+Here, we\'92ve created the box class to hold some values that will be in common between many types of boxes. We then have additional classes that calls for some variations. In this case, you must remember to specify both classes in order for the box to work correctly. One class or the other won\'92t work.\
+\
+This is a case where extends can eliminate the extra class, requiring only one class to be used. This makes maintenance much easier.\
+\
+.box \{\
+  width: 100px;\
+  height: 100px;\
+  margin: 1em;\
+  padding: 1em;\
+  color: white;\
+\}\
+.box-primary \{\
+	@extend .box;\
+	background-color: $primary-color;\
+	border-radius: 10px;\
+\}\
+.box-secondary \{\
+	@extend .box;\
+	background-color: $secondary-color;\
+\}\
+\
+compiles to\
+\
+.box, .box-primary, .box-secondary \{\
+  width: 100px;\
+  height: 100px;\
+  margin: 1em;\
+  padding: 1em;\
+  color: white;\
+\}\
+\
+.box-primary \{\
+  background-color: #00c4c7;\
+  border-radius: 10px;\
+\}\
+\
+.box-secondary \{\
+  background-color: #c80060;\
+\}\
+\
+Now our HTML can change to a class of only box-primary or box-secondary, without lots of extra code involved.\
+\
+<div class="box-primary">I am the primary box</div>\
+<div class="box-secondary">I am the secondary box</div>\
+}

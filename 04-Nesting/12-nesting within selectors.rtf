@@ -1,0 +1,71 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 It\'92s also possible to nest properties within a given style declaration. This is a superpower to use with caution, as it\'92s easy to go a bit too far using this style of nesting.\
+\
+Let\'92s consider the sidebar styles, which start around line 99. First, let\'92s write these with standard nesting:\
+\
+\
+[class*='sidebar'] \{\
+  border: 1px solid $primary-color;\
+  border-radius: $border-radius;\
+  margin-bottom: $standard-space;\
+  margin-top: 2.5em;\
+\
+  h3 \{\
+    margin: 0;\
+    color: white;\
+    background-color: $primary-color;\
+    border-top-left-radius: $border-radius;\
+    border-top-right-radius: $border-radius;\
+    padding-left:  $half-space;\
+  \}\
+  img \{\
+    border-radius: 0px 0px $border-radius $border-radius;\
+    width: 100%;\
+    max-width: 250px;\
+    display: block; /* without this, there is a gap between the image and border -- space for descenders in text, for inline elements */\
+  \} \
+\}\
+\
+Next, note the margin properties in the first selector. It\'92s possible to nest these as well:\
+\
+[class*='sidebar'] \{\
+  border: 1px solid $primary-color;\
+  border-radius: $border-radius;\
+  margin: \{\
+    bottom: $standard-space;\
+    top: 2.5em;\
+  \}\
+\
+Note the colon between margin and the next round of curly braces. This is important, as this notifies Sass that this is not a new additional selector (like the H3 a few lines later). We could also nest the border declaration, but the syntax is a bit different since border itself has a declaration:\
+\
+[class*='sidebar'] \{\
+  border: 1px solid $primary-color \{\
+    radius: $border-radius;\
+    \}\
+  margin: \{\
+    bottom: $standard-space;\
+    top: 2.5em;\
+  \}\
+\
+In this case, we state the border property value, and then nest the border-radius value after that.\
+\
+Now, in the H3 nested style, see the two border radius values? Let\'92s try to nest those as well.\
+\
+\
+h3 \{\
+    margin: 0;\
+    color: white;\
+    background-color: $primary-color;\
+    border-top: \{\
+      left-radius: $border-radius;\
+      right-radius: $border-radius;\
+    \}\
+    padding-left:  $half-space;\
+  \}\
+}

@@ -1,0 +1,24 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 For our last trick, we incorporated some Google fonts into our document, including the Cabin and Niconne fonts. They are currently linked in our HTML via an external link. What if you\'92d like to link to this external stylesheet from within your Sass, and save the second stylesheet link here on the site?\
+\
+That\'92s certainly possible. First of all, go to the Google Fonts website and find the @import statement.\
+\
+Now add the @import statement to your main Sass compiling file, in this case filemgt.scss. Because this is a font that may be used in variables, it should be the first listing in this file.\
+\
+@import url(http://fonts.googleapis.com/css?family=Cabin|Niconne);\
+@import "variables";\
+@import "mixins";\
+@import "mobile";\
+@import "tablet";\
+@import "desktop";\
+\
+Now edit the HTML to remove the link to the Google font since you don\'92t need it anymore.\
+\
+Save everything and look at your HTML page. Nothing should change in the look, but now the stylesheet is loading through Sass, rather than as a separate external stylesheet. \
+}

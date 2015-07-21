@@ -1,0 +1,44 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 Start:\
+h1 \{\
+	font-size: 36px;\
+\}\
+h2 \{\
+	font-size: 30px;\
+\}\
+h3 \{\
+	font-size: 24px;\
+\}\
+h4 \{\
+	font-size: 20px;\
+\}\
+h5 \{\
+	font-size: 18px;\
+\}\
+\
+\
+$changeit: 10;\
+\
+h1 \{\
+	font-size: 36px + $changeit;\
+\}\
+h2 \{\
+	font-size: 30px - $changeit;\
+\}\
+h3 \{\
+	font-size: 24px * $changeit;\
+\}\
+h4 \{\
+	font-size: 20px / $changeit;\
+\}\
+h5 \{\
+	font-size: (18px/16px) * 1em;\
+\}\
+The parenthesis are very important here, because division is involved. Remember that some CSS uses the slash in shorthand. For example, you can specify a font size and a line height in the same declaration: font 2em/2.5 means a font size of 2em and a line height of 2.5. Without the parentheses, it\'92s possible Sass would get confused and misinterpret what you\'92re trying to do.\
+}

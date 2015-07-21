@@ -1,0 +1,121 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 Display variables.html in your browser and you\'92ll see there\'92s not much here! That\'92s by design, so we can focus on the differences between global and local variables.\
+\
+Example 1:\
+\
+$mycolor: #c80060;\
+\
+//then add\
+$mycolor: #00c4c7;\
+\
+/* what colors are strong and h2? */\
+\
+strong \{\
+	color: $mycolor;\
+\}\
+h2 \{\
+	color: $mycolor;\
+\}\
+\
+\
+It\'92s blue because it comes second. These are global variables because we can use them anywhere in our document. \
+\
+We can also define variables locally.\
+\
+Example 2:\
+\
+$mycolor: #c80060;\
+\
+\
+/* what colors are strong and h2? */\
+strong \{\
+	$mycolor: #00c4c7;\
+	color: $mycolor;\
+\}\
+h2 \{\
+	color: $mycolor;\
+\}\
+strong is blue but h2 is pink. Why is that? Because here we have an example of a local variable (used only within one style) and a global variable (used within the entire stylesheet).\
+\
+\pard\tx3420\pardeftab720\ri720
+\cf0 Local variables don\'92t look interesting here, but they are more interesting when we get into nesting, extends, and mixins.\
+\
+Finally, it\'92s possible to set default values and override these defaults. To set a default, stick a !default on the end of the value. Remember that when something is declared as a default, it\'92s possible to override it later, and the new value without !default always takes precedence.\
+\
+Example 3:\
+\
+$mycolor: #c80060 !default;\
+\
+/* what color is strong and h2? */\
+\pard\pardeftab720\ri720
+\cf0 strong \{\
+	color: $mycolor;\
+\}\
+h2 \{\
+	color: $mycolor;\
+\}\
+\
+Here, strong and h2 are pink, of course. \
+\
+$mycolor: #c80060 !default;\
+$mycolor: #00c4c7;\
+\
+/* what colors are strong and h2? */\
+strong \{\
+	color: $mycolor;\
+\}\
+h2 \{\
+	color: $mycolor;\
+\}\
+\
+Now strong and h2 are blue.\
+\
+$mycolor: #00c4c7;\
+$mycolor: #c80060 !default;\
+\
+\
+/* what colors are strong and h2? */\
+strong \{\
+	color: $mycolor;\
+\}\
+h2 \{\
+	color: $mycolor;\
+\}\
+\
+strong and h2 are still blue! Remember the value without the !default will always override  the !default value, no matter where those values occur within the document.\
+\
+But what happens if we add back our blue declaration in strong? What are the colors now and why?\
+\
+$mycolor: #c80060 !default;\
+\
+/* what color is strong and h2? */\
+strong \{\
+	$mycolor: #00c4c7;\
+	color: $mycolor;\
+\}\
+h2 \{\
+	color: $mycolor;\
+\}\
+\
+As expected, strong is blue, and h2 is pink. The color declaration in strong is a local variable, so it only affects the strong selector. Is there a way we could change the color inside of strong and have it affect the h2 as well? yes, but it\'92s not the best coding practice.\
+\
+$mycolor: #c80060 !default;\
+\
+\
+/* what colors are strong and h2? */\
+strong \{\
+	$mycolor: #00c4c7 !global;\
+	color: $mycolor;\
+\}\
+h2 \{\
+	color: $mycolor;\
+\}\
+\
+By adding the !global flag inside of strong, you\'92ve changed the color of $mycolor globally. This is not a good idea, because when this stylesheet gets more complicated, you\'92ll go bald trying to figure out why $mycolor is misbehaving 500 lines into your stylesheet, while it works fine in the first 200 lines! Just because you can doesn\'92t mean you should, so unless you have a darn good reason to use !global in this way, avoid it.\
+}

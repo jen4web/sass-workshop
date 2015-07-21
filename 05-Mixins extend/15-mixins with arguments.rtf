@@ -1,0 +1,88 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1348\cocoasubrtf170
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\ri720
+
+\f0\fs24 \cf0 Let\'92s update our article style with the following:\
+\
+article \{\
+	width: 600px;\
+	margin: 0 auto;\
+	background-color: #fff6e0;\
+	padding: 1em;\
+	border-radius: 0.625em;\
+	$primary-color: lighten(desaturate($primary-color, 50%), 40%);\
+	background: -webkit-linear-gradient($primary-color, white); /* Chrome 10+, Saf5.1+ */\
+  	background: -moz-linear-gradient($primary-color, white); /* FF3.6+ */\
+  	background: -ms-linear-gradient($primary-color, white); /* IE10 */\
+ 	background: -o-linear-gradient($primary-color, white); /* Opera 11.10+ */\
+  	background: linear-gradient($primary-color, white); /* W3C */\
+\}\
+Save and view your web page. This is a style that\'92s added a gradient to our article\'92s background color. Notice in the code that we used a local variable for primary color to first desaturate it a bit, then lighten it.\
+\
+By now, you all know how annoying, but occasionally necessary, it is to write a zillion prefixes to get some of these new CSS3 properties to work. What if we\'92d like to use this gradient again elsewhere? \
+\
+So the first thing we can do is make a mixin for the gradient part of this.\
+\
+@mixin bkgd-gradient \{\
+	background: -webkit-linear-gradient($primary-color, white); /* Chrome 10+, Saf5.1+ */\
+  	background: -moz-linear-gradient($primary-color, white); /* FF3.6+ */\
+  	background: -ms-linear-gradient($primary-color, white); /* IE10 */\
+ 	background: -o-linear-gradient($primary-color, white); /* Opera 11.10+ */\
+  	background: linear-gradient($primary-color, white); /* W3C */\
+\}\
+\
+article \{\
+	width: 600px;\
+	margin: 0 auto;\
+	background-color: #fff6e0;\
+	padding: 1em;\
+	border-radius: 0.625em;\
+	$primary-color: lighten(desaturate($primary-color, 50%), 40%);\
+	@include bkgd-gradient;\
+\}\
+\
+That works, because now we\'92ve got a gradient we can use over and over. As for the $primary-color local variable, it could go with the mixin, or it could go with the article style, depending on whether you want this tweak to the primary color to be available everywhere or just to the article. For now, though, let\'92s say the primary color tweak is something specific to the article.\
+\
+This gradient might be more useful, though, if we could specify any two colors going into the gradient, and it would write out whatever those two colors were. This is the concept of an argument. An argument is some value being passed into the mixin, that will be used to configure the resulting styling.\
+\
+@mixin bkgd-gradient($color1, $color2) \{\
+	background: -webkit-linear-gradient($color1, $color2); /* Chrome 10+, Saf5.1+ */\
+  	background: -moz-linear-gradient($color1, $color2); /* FF3.6+ */\
+  	background: -ms-linear-gradient($color1, $color2); /* IE10 */\
+ 	background: -o-linear-gradient($color1, $color2); /* Opera 11.10+ */\
+  	background: linear-gradient($color1, $color2); /* W3C */\
+\}\
+\
+Now, this looks like we have two new variables here, $color1 and $color2, but they\'92re not defined in our document. Don\'92t worry about that. These are the colors we are passing into the gradient itself. You will define them when you call the mixin.\
+\
+In the article style, let\'92s call that mixin with the colors we wish to use, $primary-color and white.\
+article \{\
+	width: 600px;\
+	margin: 0 auto;\
+	background-color: #fff6e0;\
+	padding: 1em;\
+	border-radius: 0.625em;\
+	$primary-color: lighten(desaturate($primary-color, 50%), 40%);\
+	@include bkgd-gradient($primary-color, white);\
+\}\
+\
+What happens now is that our local value for $primary-color and white are both passed into the mixin, which sees $primary-color as $color1, and white as $color2. \
+\
+If we switch these, so white is color 1 and primary is color 2, the gradient reverses. (demo)\
+\
+Let\'92s say we want to add this gradient to a div we\'92ll add to our HTML document.\
+\
+HTML:\
+<div class="demogradient"></div> (after last h5 title)\
+\
+.demogradient \{\
+	width: 200px;\
+	height: 200px;\
+	@include bkgd-gradient($secondary-color, #e6bf98);\
+\}\
+\
+This is one of the big strengths of mixins, in that they are able to accept values however we\'92d like to pass them in.\
+}
